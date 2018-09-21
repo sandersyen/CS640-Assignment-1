@@ -38,7 +38,7 @@ public class IperfClient {
 			out.close();
 			Soc.close();
 
-			System.out.println("sent=" + sent_times + " KB rate="+ (sent_times / 1000 * 8 / time) + " Mbps");
+			System.out.println("sent=" + sent_times + " KB rate="+ ((double)sent_times / 1000 * 8 / time) + " Mbps");
 			
 		} catch (UnknownHostException e) {
 			System.err.println("Don't know about host " + host_i);
