@@ -29,7 +29,8 @@ public class Server {
 	        
 			// calculate rate & output
 			time = (System.currentTimeMillis() - time)/1000;
-			double rate = (data_received /1000) / time;
+			data_received /= 1000;
+			double rate = (data_received /1000) *8 / time;
 			System.out.println("received=" + data_received + " KB rate=" + rate + " Mbps" );
 		} catch (Exception e) {
 			e.printStackTrace();
