@@ -24,12 +24,14 @@ public class IperfClient {
 			DataOutputStream out = new DataOutputStream(Soc.getOutputStream());
 		)
 		{
+			// Data should be sent in chunks of 1000 bytes and the data should be all zeros. 
 			byte[] chunks = new byte[1000];
 			int chunks_size = chunks.length;
 			long startTime = System.nanoTime();
 			long endTime = startTime + time_i;
 			int sent_times = 0;
 
+			// Allow the remaining part of the 1000 byte chunk to be sent and then close the socket connection.
 			while (System.nanoTime() < endTime) {
 				out.write(chunks, 0, chunks_size);
 				sent_times++;
@@ -41,6 +43,7 @@ public class IperfClient {
 			System.out.println("sent=" + sent_times + " KB rate="+ ((double)sent_times / 1000 * 8 / time) + " Mbps");
 			
 		} catch (UnknownHostException e) {
+			// Checking that hostname is a valid address
 			System.err.println("Don't know about host " + host_i);
 			System.exit(1);
 		} catch (IOException e) {
