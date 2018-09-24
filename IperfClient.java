@@ -14,8 +14,8 @@ public class IperfClient {
 		
 		host_i = host;
 		portNumber_i = portNumber;
-		// need to convert to ns
-		time_i = (long)time * 1000000000;
+		// need to convert to ms
+		time_i = (long)time * 1000;
 		
 		try (
 			// Create a socket that connects to the server (identified by the host name and port number)
@@ -27,20 +27,21 @@ public class IperfClient {
 			// Data should be sent in chunks of 1000 bytes and the data should be all zeros. 
 			byte[] chunks = new byte[1000];
 			int chunks_size = chunks.length;
-			long startTime = System.nanoTime();
+			long startTime = System.currentTimeMillis();
 			long endTime = startTime + time_i;
 			int sent_times = 0;
 
 			// Allow the remaining part of the 1000 byte chunk to be sent and then close the socket connection.
-			while (System.nanoTime() < endTime) {
+			while (System.currentTimeMillis() < endTime) {
 				out.write(chunks, 0, chunks_size);
 				sent_times++;
 			}
+			endTime = System.currentTimeMillis();
 
 			out.close();
 			Soc.close();
 
-			double rate = (sent_times / 1000 * 8 / time);
+			double rate = (sent_times / 1000 * 8 / ((endTime - startTime) / 1000));
 
 			System.out.println("sent=" + sent_times + " KB rate="+ rate + " Mbps");
 			
