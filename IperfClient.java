@@ -40,7 +40,9 @@ public class IperfClient {
 			out.close();
 			Soc.close();
 
-			System.out.println("sent=" + sent_times + " KB rate="+ ((double)sent_times / 1000 * 8 / time) + " Mbps");
+			double rate = (sent_times / 1000 * 8 / time);
+
+			System.out.println("sent=" + sent_times + " KB rate="+ rate + " Mbps");
 			
 		} catch (UnknownHostException e) {
 			// Checking that hostname is a valid address
