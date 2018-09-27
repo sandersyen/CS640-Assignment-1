@@ -1,5 +1,5 @@
-JFLAGS = -g
 JC = javac
+JFLAGS = -g
 .SUFFIXES: .java .class
 .java.class:
 		$(JC) $(JFLAGS) $*.java
@@ -14,4 +14,4 @@ default: classes
 classes: $(CLASSES:.java=.class)
 
 clean:
-		$(RM) *.class
+	rm -f *.class

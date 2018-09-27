@@ -14,23 +14,24 @@ public class IperfServer {
 			// initialization
 			server_socket = new ServerSocket(port);
 			Socket client_socket = server_socket.accept();
-			long time = System.currentTimeMillis();
+			InputStream input_stream = client_socket.getInputStream();
 			byte chunks[] = new byte[1000];
 
-            // receive data and count
-			InputStream input_stream = client_socket.getInputStream();
+			// receive data and count
 			long i;
 			long data_received = 0;
+			long time = System.currentTimeMillis();
 			while ((i = input_stream.read(chunks)) != -1) {
 				data_received += i;
 			}
 
 			// calculate rate & output
-			time = (System.currentTimeMillis() - time) / 1000;
+			time = System.currentTimeMillis() - time;
 			data_received /= 1000;
-			double rate = (data_received / 1000) * 8 / time;
+			double rate = ((double)data_received / 1000) * 8 / (time / 1000);
 			System.out.println("received=" + data_received + " KB rate=" + rate + " Mbps" );
 
+			client_socket.close();
 			server_socket.close();
 
 		} catch (Exception e) {

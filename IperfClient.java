@@ -5,18 +5,18 @@ import java.io.*;
 import java.net.*;
 
 public class IperfClient {
-	
+
 	String host_i = "127.0.0.1";
 	int portNumber_i = 0;
 	long time_i = 0;
 
 	public IperfClient (String host, int portNumber, double time) {
-		
+
 		host_i = host;
 		portNumber_i = portNumber;
 		// need to convert to ms
 		time_i = (long)time * 1000;
-		
+
 		try (
 			// Create a socket that connects to the server (identified by the host name and port number)
 			Socket Soc = new Socket(host_i, portNumber_i);
@@ -24,7 +24,7 @@ public class IperfClient {
 			DataOutputStream out = new DataOutputStream(Soc.getOutputStream());
 		)
 		{
-			// Data should be sent in chunks of 1000 bytes and the data should be all zeros. 
+			// Data should be sent in chunks of 1000 bytes and the data should be all zeros.
 			byte[] chunks = new byte[1000];
 			int chunks_size = chunks.length;
 			long startTime = System.currentTimeMillis();
@@ -41,10 +41,11 @@ public class IperfClient {
 			out.close();
 			Soc.close();
 
-			double rate = (sent_times / 1000 * 8 / ((endTime - startTime) / 1000));
+
+			double rate = ((double)sent_times / 1000) * 8 / ((endTime - startTime) / 1000);
 
 			System.out.println("sent=" + sent_times + " KB rate="+ rate + " Mbps");
-			
+
 		} catch (UnknownHostException e) {
 			// Checking that hostname is a valid address
 			System.err.println("Don't know about host " + host_i);
