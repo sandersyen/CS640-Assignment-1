@@ -29,7 +29,8 @@ public class IperfServer {
 			time = System.currentTimeMillis() - time;
 			data_received /= 1000;
 			double rate = ((double)data_received / 1000) * 8 / (time / 1000);
-			System.out.println("received=" + data_received + " KB rate=" + rate + " Mbps" );
+
+			System.out.println("received=" + data_received + " KB rate=" + String.format("%.3f", rate) + " Mbps" );
 
 			client_socket.close();
 			server_socket.close();
